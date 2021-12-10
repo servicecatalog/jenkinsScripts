@@ -128,7 +128,7 @@ def execute() {
         }
     }
 
-    def _publishArtifacts() = {
+    def _publishArtifacts = {
 	 post {
            always {
               archiveArtifacts artifacts: '/build/oscm-ui-tests/target/surefire-reports/**/*', fingerprint: true           
