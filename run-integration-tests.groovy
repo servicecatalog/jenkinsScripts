@@ -114,9 +114,10 @@ node("${NODE_NAME}") {
     def pull = evaluate readTrusted('shared/pull.groovy')
     def checkoutTests = evaluate readTrusted('shared/checkout-tests.groovy')
     def start = evaluate readTrusted('shared/start.groovy')
-    
-    // Run integration tests
+
+    // Test and publish
     def tests = evaluate readTrusted('tests/portal-integration-tests.groovy')
+    def publishArtifacts = evaluate readTrusted('shared/publishArtifacts.groovy')
     
     clean.execute()
     defVariables.execute()
@@ -124,4 +125,5 @@ node("${NODE_NAME}") {
     checkoutTests.execute()
     start.execute('localhost', true)
     tests.execute()
+    publishArtifacts.execute('/build/oscm-ui-tests/target/surefire-reports/**/*')
 }

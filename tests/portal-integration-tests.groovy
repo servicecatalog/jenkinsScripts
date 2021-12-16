@@ -128,14 +128,6 @@ def execute() {
         }
     }
 
-    def _publishArtifacts = {
-	 post {
-           always {
-              archiveArtifacts artifacts: '/build/oscm-ui-tests/target/surefire-reports/**/*', fingerprint: true           
-           }
-         }
-    }
-	
     _prepareBuildTools()
     _updateTechnicalServicePath()
     _setupTenant()
@@ -143,8 +135,6 @@ def execute() {
     _setupMaildevPorts()
     _installUITests()
     _cleanUp()
-    _publishArtifacts()
-	
 }
 
 return this
