@@ -117,13 +117,18 @@ node("${NODE_NAME}") {
 
     // Test and publish
     def tests = evaluate readTrusted('tests/portal-integration-tests.groovy')
-    def publishArtifacts = evaluate readTrusted('shared/publishArtifacts.groovy')
-    
+
     clean.execute()
     defVariables.execute()
     pull.execute()
     checkoutTests.execute()
     start.execute('localhost', true)
-    tests.execute()
-    publishArtifacts.execute('/build/oscm-ui-tests/target/surefire-reports/**/*')
+
+    try {
+        tests.execute()
+    } finally {
+        junit '${WORKSPACE}/build/oscm-ui-tests/target/surefire-reports/*.xml'
+    }
+
+
 }
