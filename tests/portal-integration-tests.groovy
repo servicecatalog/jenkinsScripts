@@ -143,7 +143,7 @@ def execute() {
     _setupMaildevPorts()
     _installUITests()
     _cleanUp()
-    _publishArtifacts()
+    
 	
 }
 
