@@ -123,11 +123,5 @@ node("${NODE_NAME}") {
     pull.execute()
     checkoutTests.execute()
     start.execute('localhost', true)
-
-    try {
-        tests.execute()
-    } finally {
-        junit "${WORKSPACE}/oscm-ui-tests/target/surefire-reports/*.xml"
-    }
-
+    tests.execute()
 }

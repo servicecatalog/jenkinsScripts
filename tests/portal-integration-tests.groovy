@@ -117,6 +117,12 @@ def execute() {
                         "-e MAVEN_OPTS=\"${MAVEN_OPTS} \" " +
                         "oscm-maven clean install -e -f /build/oscm-ui-tests/pom.xml"
             }
+            try {
+                sh "echo 'Archive test results from ${WORKSPACE}/oscm-ui-tests/target/surefire-reports/*.xml'"
+            } finally {
+                archiveArtifacts "${WORKSPACE}/oscm-ui-tests/target/surefire-reports/*.xml"
+                sh "echo 'done.'"
+            }
         }
     }
 
