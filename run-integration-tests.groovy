@@ -127,7 +127,7 @@ node("${NODE_NAME}") {
     try {
         tests.execute()
     } finally {
-        junit '${WORKSPACE}/build/oscm-ui-tests/target/surefire-reports/*.xml'
+        junit '${WORKSPACE}/oscm-ui-tests/target/surefire-reports/*.xml'
     }
 
 }
