@@ -16,12 +16,12 @@ def execute() {
             script: 'echo $AUTH_MODE;',
             returnStdout: true
     ).trim()
-    
+
     def _prepareBuildTools = {
         stage('Build - pull build tools') {
-             docker.image("${DOCKER_REGISTRY}/${DOCKER_ORGANIZATION}/oscm-maven:${DOCKER_TAG}").pull()
-             sh(
-                'docker tag ${DOCKER_REGISTRY}/${DOCKER_ORGANIZATION}/oscm-maven:${DOCKER_TAG} oscm-maven; ' 
+            docker.image("${DOCKER_REGISTRY}/${DOCKER_ORGANIZATION}/oscm-maven:${DOCKER_TAG}").pull()
+            sh(
+                'docker tag ${DOCKER_REGISTRY}/${DOCKER_ORGANIZATION}/oscm-maven:${DOCKER_TAG} oscm-maven; '
             )
         }
     }
@@ -40,20 +40,20 @@ def execute() {
             }
         }
     }
-    
+
 
     def _setupTenant = {
         stage('Test webservices - setup tenant') {
             if (authMode == 'OIDC') {
-        try {
-           env.clientId = "${CLIENT_ID}"
-           env.clientSecret = "${CLIENT_SECRET}"
-        } catch (exc) {
-            withCredentials([string(credentialsId: 'UI-TESTS-CLIENT-ID', variable: 'CLIENT_ID'), string(credentialsId: 'UI-TESTS-CLIENT-SECRET', variable: 'CLIENT_SECRET')]) {
-              env.clientId = "${CLIENT_ID}"
-              env.clientSecret = "${CLIENT_SECRET}"
-            }
-        }
+                try {
+                    env.clientId = "${CLIENT_ID}"
+                    env.clientSecret = "${CLIENT_SECRET}"
+                } catch (exc) {
+                    withCredentials([string(credentialsId: 'UI-TESTS-CLIENT-ID', variable: 'CLIENT_ID'), string(credentialsId: 'UI-TESTS-CLIENT-SECRET', variable: 'CLIENT_SECRET')]) {
+                        env.clientId = "${CLIENT_ID}"
+                        env.clientSecret = "${CLIENT_SECRET}"
+                    }
+                }
                 sh "cp ${WORKSPACE}/docker/config/oscm-identity/tenants/tenant-default.properties.template ${WORKSPACE}/docker/config/oscm-identity/tenants/tenant-default.properties"
 
                 sh "sed -ri 's|oidc.authUrlScope=.*|oidc.authUrlScope=openid profile offline_access https://graph.microsoft.com/user.read.all https://graph.microsoft.com/group.readwrite.all https://graph.microsoft.com/directory.readwrite.all|g' ${WORKSPACE}/docker/config/oscm-identity/tenants/tenant-default.properties"
@@ -117,15 +117,35 @@ def execute() {
                         "-e MAVEN_OPTS=\"${MAVEN_OPTS} \" " +
                         "oscm-maven clean install -e -f /build/oscm-ui-tests/pom.xml"
             }
+        }
+    }
+
+    def _publishReport = {
+        stage('Tests - publish ui test report') {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                user = sh(returnStdout: true, script: 'id -u').trim()
+                group = sh(returnStdout: true, script: 'id -g').trim()
+                sh "sleep 120"
+
+                sh "docker run " +
+                        "--name maven-ui-tests-${BUILD_ID}-report " +
+                        "--user $user:$group " +
+                        "--rm " +
+                        "--network host " +
+                        "--add-host oscm-identity:127.0.0.1 " +
+                        "-v ${WORKSPACE}:/build " +
+                        " ${RUN_PROXY_ARGS} " +
+                        "-e MAVEN_OPTS=\"${MAVEN_OPTS} \" " +
+                        "oscm-maven site -DgenerateReports=false"
+            }
             try {
-                sh "echo 'Archive test results from oscm-ui-tests/target/surefire-reports/*.xml'"
+                sh "echo 'Archive test results from oscm-ui-tests/target/site/**/*'"
             } finally {
-                archiveArtifacts "oscm-ui-tests/target/surefire-reports/*.xml"
+                archiveArtifacts "oscm-ui-tests/target/site/**/*"
                 sh "echo 'done.'"
             }
         }
     }
-
 
 
     def _cleanUp = {
@@ -140,6 +160,7 @@ def execute() {
     _stopUnusedContainers()
     _setupMaildevPorts()
     _installUITests()
+    _publishReport()
     _cleanUp()
 }
 
