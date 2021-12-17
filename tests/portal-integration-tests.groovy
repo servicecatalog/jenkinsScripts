@@ -136,7 +136,7 @@ def execute() {
                         "-v ${WORKSPACE}:/build " +
                         " ${RUN_PROXY_ARGS} " +
                         "-e MAVEN_OPTS=\"${MAVEN_OPTS} \" " +
-                        "oscm-maven site -DgenerateReports=false"
+                        "oscm-maven site -DgenerateReports=false -f /build/oscm-ui-tests/pom.xml"
             }
             try {
                 sh "echo 'Archive test results from oscm-ui-tests/target/site/**/*'"
