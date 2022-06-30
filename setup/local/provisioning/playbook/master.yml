@@ -7,8 +7,8 @@
       yum_repository:
         name: endpoint
         description: End Point repository (required for installing Git in version 2.x)
-        baseurl: https://packages.endpoint.com/rhel/$releasever/os/$basearch/
-        gpgkey: https://packages.endpoint.com/endpoint-rpmsign-7.pub
+        baseurl: https://packages.endpointdev.com/rhel/$releasever/os/$basearch/
+        gpgkey: https://packages.endpointdev.com/endpoint-rpmsign-7.pub
         gpgcheck: yes
         enabled: yes
         state: present
@@ -88,7 +88,7 @@
         src: "/vagrant/provisioning/init.groovy.d/"
     - name: run the jenkins-plugin-manager
       become: yes
-      command: java -jar /home/vagrant/jenkins-plugin-manager.jar --jenkins-version 2.263.4 --plugin-file /home/vagrant/plugins.yaml --plugin-download-directory /var/lib/jenkins/plugins
+      command: java -jar /home/vagrant/jenkins-plugin-manager.jar --jenkins-version 2.277.4 --plugin-file /home/vagrant/plugins.yaml --plugin-download-directory /var/lib/jenkins/plugins
     - name: Update JENKINS_HOME ownership
       become: yes
       file:
