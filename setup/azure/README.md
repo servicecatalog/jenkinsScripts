@@ -1,7 +1,6 @@
 # Azure cloud setup of OSCM Jenkins Pipelines
 
 ## Prerequisites
-
 * Install [Vagrant](https://www.vagrantup.com/docs/installation)
 * Valid [Azure platform](http://portal.azure.com/) subscription with service principal (registered client application) created in Azure Active Directory.
 
