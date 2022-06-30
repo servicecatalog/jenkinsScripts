@@ -7,8 +7,8 @@
       yum_repository:
         name: endpoint
         description: End Point repository (required for installing Git in version 2.x)
-        baseurl: https://packages.endpoint.com/rhel/$releasever/os/$basearch/
-        gpgkey: https://packages.endpoint.com/endpoint-rpmsign-7.pub
+        baseurl: https://packages.endpointdev.com/rhel/$releasever/os/$basearch/
+        gpgkey: https://packages.endpointdev.com/endpoint-rpmsign-7.pub
         gpgcheck: yes
         enabled: yes
         state: present
