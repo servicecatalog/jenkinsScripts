@@ -1,8 +1,15 @@
 # Azure cloud setup of OSCM Jenkins Pipelines
 
+## Documentation
+* Read the [OSCM Infrastructure in Azure ](http://estscm1.intern.est.fujitsu.com/fujitsu-bss/oscm-dev/-/raw/master/wiki/Infrastructure/OSCM_Infra_in_Azure.pdf?inline=false) wiki page.
+* Watch the [intro](https://www.youtube.com/watch?v=AakecRFsFn8) video, jump to 16:35 and perform steps: 1. Create a key vault (if existing skip this part) 2. Create a Service Principal and a client secret and 3. assign an Access Policy for the sp to your key vault.
+
 ## Prerequisites
 * Install [Vagrant](https://www.vagrantup.com/docs/installation)
-* Valid [Azure platform](http://portal.azure.com/) subscription with service principal (registered client application) created in Azure Active Directory.
+* Valid [Azure platform](http://portal.azure.com/) subscription with service principal (registered client application with client secret) created in Azure Active Directory. Notice the three important prerequisite steps:
+   *  Please copy-paste the value of the client secret to a safe place upon its creation because its value cannot be retrieved afterwards.
+   *  Assign an Access Policy for your Service Principal to your key vault and add all permissions for keys and secrets.
+   *  Assign the role `Contributor` for the Service Principal to the Azure Subscription to enable access to all resource groups of the subscription.
 
 ## Getting started
 As this setup is using [Microsoft Azure](https://azure.microsoft.com/) as Vagrant provider, which allows Vagrant to control and provision machines in Microsoft Azure, following steps need to be executed for make it working:
