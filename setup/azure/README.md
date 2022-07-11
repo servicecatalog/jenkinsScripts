@@ -9,8 +9,8 @@
 * Valid [Azure platform](http://portal.azure.com/) subscription with service principal (registered client application with client secret) created in Azure Active Directory. Notice the three important prerequisite steps:
    *  Please copy-paste the value of the client secret to a safe place upon its creation because its value cannot be retrieved afterwards.
    *  Assign an Access Policy for your Service Principal to your key vault and add all permissions for keys and secrets.
-   *  Assign the role `Contributor` for the Service Principal to the Azure Subscription to enable access to all resource groups of the subscription.
-
+   *  Assign the role `Contributor` for the Service Principal to the Azure Subscription of your app to enable access to all its resource groups. This can be done in the Azure Portal `Subscriptions` category in the` Access control (IAM)` tab.
+   
 ## Getting started
 As this setup is using [Microsoft Azure](https://azure.microsoft.com/) as Vagrant provider, which allows Vagrant to control and provision machines in Microsoft Azure, following steps need to be executed for make it working:
 > **_NOTE:_**  Execute the commands outside of the VPN network.
