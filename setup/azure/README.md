@@ -6,13 +6,15 @@
 
 ## Getting started
 As this setup is using [Microsoft Azure](https://azure.microsoft.com/) as Vagrant provider, which allows Vagrant to control and provision machines in Microsoft Azure, following steps need to be executed for make it working:
+> **_NOTE:_**  Execute the commands outside of the VPN network.
 
 ```
 $ vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
 $ vagrant plugin install vagrant-azure
 ```
 
-Additionally, following environment variables must be set as they are used for setting up the connection to Azure platform:
+Additionally, following environment variables must be set as they are used for setting up the connection to Azure platform.
+Please note that `AZURE_CLIENT_SECRET` contains the value of the client secret and not the secret ID.
 
 ```
 AZURE_TENANT_ID
@@ -29,6 +31,7 @@ ssh-keygen -m PEM -t rsa
 
 Now to make Vargrant setup everything, simply execute
 
+> **_NOTE:_**  Execute the command outside of the VPN network.
 ```
 vagrant up --no-parallel
 ```
