@@ -2,7 +2,7 @@
 
 ## Documentation
 * Read the [OSCM Infrastructure in Azure ](http://estscm1.intern.est.fujitsu.com/fujitsu-bss/oscm-dev/-/raw/master/wiki/Infrastructure/OSCM_Infra_in_Azure.pdf?inline=false) wiki page.
-* Watch the [intro](https://www.youtube.com/watch?v=AakecRFsFn8) video, jump to 16:35 and perform steps: 1. Create a key vault (if existing skip this part) 2. Create a Service Principal and a client secret and 3. assign an Access Policy for the sp to your key vault.
+* Watch the [intro](https://www.youtube.com/watch?v=AakecRFsFn8) video, jump to 16:35 for the practical part and perform steps: 1. Create a key vault (if existing skip this part) 2. Create a Service Principal and a client secret and 3. assign an Access Policy for the sp to your key vault.
 
 ## Prerequisites
 * Install [Vagrant](https://www.vagrantup.com/docs/installation)
